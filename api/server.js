@@ -6,13 +6,16 @@ const app =express();
 app.use(express.json())
 app.use(cors());
 
-const db = mysql.createConnection({
-    host:"localhost",
-    port:"3306",
-    user:"root",
-    password:"nidhi@872614",
-    database:"loginreact"
-})
+require('dotenv').config();
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
+
 
 app.post('/login',(req,res)=>{
     const sql = "select * from login where email = ? AND password = ?";
